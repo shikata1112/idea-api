@@ -13,7 +13,7 @@ describe 'index アクション' do
   context 'パラメータにcategory_nameが存在するとき' do
     context 'パラメータのcategory_nameをもつcategoryデータが存在するとき' do
       it 'categoryデータに紐づくideasを返すこと' do
-        get "/api/v1/ideas?category_name=#{CGI.escape @category2.name}"
+        get api_v1_ideas_path, params: { category_name: @category2.name }
 
         expect(response.status).to eq 200
         expect(json['data'].size).to eq 2
@@ -22,7 +22,7 @@ describe 'index アクション' do
 
     context 'パラメータのcategory_nameをもつcategoryデータが存在しないとき' do
       it 'ステータスコード404を返すこと' do
-        get '/api/v1/ideas?category_name=hogehoge'
+        get api_v1_ideas_path, params: { category_name: 'hogehoge' }
 
         expect(response.response_code).to eq 404
       end
@@ -31,7 +31,16 @@ describe 'index アクション' do
 
   context 'パラメータにcategory_nameが存在しないとき' do
     it 'ideaを全て返すこと' do
-      get '/api/v1/ideas'
+      get api_v1_ideas_path
+      
+      expect(response.status).to eq 200
+      expect(json['data'].size).to eq 3
+    end
+  end
+
+  context 'category_name以外のパラメータがリクエストされたとき' do
+    it 'ideaを全て返すこと' do
+      get api_v1_ideas_path, params: { hoge: 'hogehuga' }
       
       expect(response.status).to eq 200
       expect(json['data'].size).to eq 3
