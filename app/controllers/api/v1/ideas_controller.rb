@@ -6,12 +6,23 @@ module Api
       def create
         category = Category.find_by(name: params[:category_name])
         if category.present?
-          category.ideas.create!(body: idea_params[:body])
-          render status: :created
+          begin
+            category.ideas.create!(body: idea_params[:body])
+            render json: { status: 201 }, status: :created
+          rescue ActiveRecord::RecordInvalid => e
+            Rails.logger.error e.message
+            render json: { status: 422 }, status: :unprocessable_entity
+          end
+        else
+          begin
+            new_category = Category.create!(name: idea_params[:category_name])
+            new_category.ideas.create!(body: idea_params[:body])
+            render json: { status: 201 }, status: :created
+          rescue ActiveRecord::RecordInvalid => e
+            Rails.logger.error e.message
+            render json: { status: 422 }, status: :unprocessable_entity
+          end
         end
-      rescue ActiveRecord::RecordInvalid => e
-        Rails.logger.error e.message
-        render status: :unprocessable_entity
       end
 
       def index
