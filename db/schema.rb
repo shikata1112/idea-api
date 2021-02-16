@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_02_14_190922) do
     t.text "body", null: false, comment: "アイデア本文"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_ideas_on_category_id"
   end
 
+  add_foreign_key "ideas", "categories"
 end
