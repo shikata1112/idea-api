@@ -6,15 +6,8 @@ module Api
       def create
         category = Category.find_by(name: params[:category_name])
         if category.present?
-          
-          binding.pry
           category.ideas.create!(body: idea_params[:body])
-          # idea = Idea.new(body: idea_params[:body])
-          # idea.category_id = category.id
-          # idea.save!
           render status: :created
-        else
-
         end
       rescue ActiveRecord::RecordInvalid => e
         Rails.logger.error e.message
@@ -22,17 +15,17 @@ module Api
       end
 
       def index
-        category = Category.find_by(name: params[:category_name])
-        if category.present?
-          @ideas =
-            if params[:category_name].present?
-              category.ideas
-            else
-              Idea.all
-            end
-          render formats: :json, status: :created
+        if params[:category_name].present?
+          category = Category.find_by(name: params[:category_name])
+          if category.present?
+            @ideas = category.ideas
+            render formats: :json
+          else
+            render json: { status: 404 }, status: :not_found
+          end
         else
-          render status: :not_found
+          @ideas = Idea.all
+          render formats: :json
         end
       end
 

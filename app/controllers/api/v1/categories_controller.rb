@@ -1,5 +1,4 @@
 class Api::V1::CategoriesController < ApplicationController
-
   def create
     Category.create!(category_params)
     render status: :created
