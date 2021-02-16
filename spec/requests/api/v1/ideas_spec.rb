@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'IndexApi' do
+describe 'index アクション' do
   before do
     @category1 = Category.create!(name: 'アプリ')
     @category2 = Category.create!(name: 'スポーツ')
@@ -35,6 +35,55 @@ describe 'IndexApi' do
       
       expect(response.status).to eq 200
       expect(json['data'].size).to eq 3
+    end
+  end
+end
+
+describe 'create アクション' do
+  before do
+    @category1 = Category.create!(name: 'アプリ')
+  end
+
+  context 'パラメータのcategory_nameをもつcategoryデータが存在するとき' do
+    context 'リクエストが正常であるとき' do
+      it '既存のcategoryをcategory_idとしてideaを保存すること' do
+        expect { post api_v1_ideas_path, params: { category_name: @category1.name, body: '家計簿アプリ' } }.to change(Idea, :count).by(+1)
+        expect(response.status).to eq 201
+      end
+    end
+
+    context 'リクエストが正常でないとき' do
+      it 'ステータスコード422を返し、保存に失敗すること' do
+        post api_v1_ideas_path, params: { category_name: @category1.name, body: ' ' }
+        
+        expect(response.status).to eq 422
+      end
+    end
+  end
+  
+  context 'パラメータのcategory_nameをもつcategoryデータが存在しないとき' do
+    context 'リクエストが正常であるとき' do
+      it '新たなcategoryとして保存し、ideaを保存すること' do
+        expect { post api_v1_ideas_path, params: { category_name: 'スポーツ', body: 'テニス' } }.to change(Idea, :count).by(+1)
+        expect(response.status).to eq 201
+      end
+    end
+
+    context 'category_nameが空であるとき' do
+      it 'ステータスコード422を返し、保存に失敗すること' do
+        post api_v1_ideas_path, params: { category_name: ' ', body: 'バスケットボール' }
+
+        expect(response.status).to eq 422
+      end
+    end
+
+    context '新たなcategory_nameが存在し、bodyが空であるとき' do
+      it 'ステータスコード422を返し、保存に失敗すること' do
+        post api_v1_ideas_path, params: { category_name: '健康', body: ' ' }
+        # TODO: categoryだけ保存されることを修正予定
+
+        expect(response.status).to eq 422
+      end
     end
   end
 end
