@@ -15,17 +15,11 @@ module Api
       end
 
       def index
-        if params[:category_name].present?
-          category = Category.find_by(name: params[:category_name])
-          if category.present?
-            @ideas = category.ideas
-            render formats: :json
-          else
-            render json: { status: 404 }, status: :not_found
-          end
-        else
-          @ideas = Idea.all
+        @ideas = Category.existing_ideas(params[:category_name])
+        if @ideas.present?
           render formats: :json
+        else
+          render json: { status: 404 }, status: :not_found
         end
       end
 
