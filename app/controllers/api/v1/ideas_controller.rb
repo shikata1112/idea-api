@@ -15,8 +15,10 @@ module Api
           end
         else
           begin
-            new_category = Category.create!(name: idea_params[:category_name])
-            new_category.ideas.create!(body: idea_params[:body])
+            ActiveRecord::Base.transaction do
+              new_category = Category.create!(name: idea_params[:category_name])
+              new_category.ideas.create!(body: idea_params[:body])
+            end
             render json: { status: 201 }, status: :created
           rescue ActiveRecord::RecordInvalid => e
             Rails.logger.error e.message

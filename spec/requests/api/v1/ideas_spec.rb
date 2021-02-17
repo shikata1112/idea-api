@@ -65,6 +65,7 @@ describe 'create アクション' do
       it 'ステータスコード422を返し、保存に失敗すること' do
         post api_v1_ideas_path, params: { category_name: @category1.name, body: ' ' }
         
+
         expect(response.status).to eq 422
       end
     end
@@ -88,9 +89,7 @@ describe 'create アクション' do
 
     context '新たなcategory_nameが存在し、bodyが空であるとき' do
       it 'ステータスコード422を返し、保存に失敗すること' do
-        post api_v1_ideas_path, params: { category_name: '健康', body: ' ' }
-        # TODO: categoryだけ保存されることを修正予定
-
+        expect { post api_v1_ideas_path, params: { category_name: '健康', body: ' ' } }.to change(Idea, :count).by(0)
         expect(response.status).to eq 422
       end
     end
