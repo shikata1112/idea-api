@@ -19,7 +19,7 @@ module Api
         if @ideas.present?
           render formats: :json
         else
-          render json: { status: 404 }, status: :not_found
+          head :not_found
         end
       end
 
