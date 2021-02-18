@@ -65,7 +65,6 @@ describe 'create アクション' do
       it 'ステータスコード422を返し、保存に失敗すること' do
         post api_v1_ideas_path, params: { category_name: @category1.name, body: ' ' }
         
-
         expect(response.status).to eq 422
       end
     end
