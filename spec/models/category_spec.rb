@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  describe '.existing_ideas' do
+  describe '.fetch_ideas' do
     before do
       category1 = Category.create!(name: 'アプリ')
       category2 = Category.create!(name: 'スポーツ')
@@ -13,20 +13,20 @@ RSpec.describe Category, type: :model do
     context 'category_nameが存在するとき' do
       context 'category_nameをもつcategoryデータが存在するとき' do
         it 'categoryに紐づくideaを全て返すこと' do
-          expect(Category.existing_ideas('アプリ').size).to eq 2
+          expect(Category.fetch_ideas('アプリ').size).to eq 2
         end
       end
 
       context 'category_nameをもつcategoryデータが存在しないとき' do
         it 'falseを返すこと' do
-          expect(Category.existing_ideas('健康')).to be_falsey
+          expect(Category.fetch_ideas('健康')).to eq []
         end
       end
     end
 
     context 'category_nameが存在しないとき' do
       it 'ideaを全て返すこと' do
-        expect(Category.existing_ideas(' ').size).to eq 3
+        expect(Category.fetch_ideas(' ').size).to eq 3
       end
     end
   end

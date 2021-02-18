@@ -28,12 +28,9 @@ module Api
       end
 
       def index
-        @ideas = Category.existing_ideas(params[:category_name])
-        if @ideas.present?
-          render formats: :json
-        else
-          head :not_found
-        end
+        @ideas = Category.fetch_ideas(params[:category_name])
+        return render formats: :json if @ideas.present?
+        head :not_found
       end
 
       private
