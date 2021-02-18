@@ -4,7 +4,7 @@ class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: true }
 
   def self.fetch_ideas(category_name)
-    return Idea.all if category_name.nil?
+    return Idea.all if category_name.blank?
     category = find_by(name: category_name)
     return category.ideas if category.present?
     []

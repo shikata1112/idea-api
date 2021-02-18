@@ -19,7 +19,7 @@ RSpec.describe Category, type: :model do
 
       context 'category_nameをもつcategoryデータが存在しないとき' do
         it 'falseを返すこと' do
-          expect(Category.fetch_ideas('健康')).to be_falsey
+          expect(Category.fetch_ideas('健康')).to eq []
         end
       end
     end
