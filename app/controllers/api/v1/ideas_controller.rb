@@ -1,23 +1,21 @@
-# Containing a class
 module Api
   module V1
-    # Description/Explanation of IdeasController class
     class IdeasController < ApplicationController
       def create
-        category = Category.find_by(name: params[:category_name])
-        if category.present?
-          category.ideas.create!(body: idea_params[:body])
-          render status: :created
-        end
+        Category.create_ideas!(idea_params[:category_name], idea_params[:body])
+        head :created
       rescue ActiveRecord::RecordInvalid => e
         Rails.logger.error e.message
-        render status: :unprocessable_entity
+        head :unprocessable_entity
       end
 
       def index
         @ideas = Category.fetch_ideas(params[:category_name])
-        return render formats: :json if @ideas.present?
-        head :not_found
+        if @ideas.present?
+          render formats: :json
+        else
+          head :not_found
+        end
       end
 
       private
