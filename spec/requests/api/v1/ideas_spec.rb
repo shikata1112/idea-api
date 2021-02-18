@@ -32,7 +32,7 @@ describe 'index アクション' do
   context 'パラメータにcategory_nameが存在しないとき' do
     it 'ideaを全て返すこと' do
       get api_v1_ideas_path
-      
+
       expect(response.status).to eq 200
       expect(json['data'].size).to eq 3
     end
@@ -41,7 +41,7 @@ describe 'index アクション' do
   context 'category_name以外のパラメータがリクエストされたとき' do
     it 'ideaを全て返すこと' do
       get api_v1_ideas_path, params: { hoge: 'hogehuga' }
-      
+
       expect(response.status).to eq 200
       expect(json['data'].size).to eq 3
     end
@@ -64,12 +64,12 @@ describe 'create アクション' do
     context 'リクエストが正常でないとき' do
       it 'ステータスコード422を返し、保存に失敗すること' do
         post api_v1_ideas_path, params: { category_name: @category1.name, body: ' ' }
-        
+
         expect(response.status).to eq 422
       end
     end
   end
-  
+
   context 'パラメータのcategory_nameをもつcategoryデータが存在しないとき' do
     context 'リクエストが正常であるとき' do
       it '新たなcategoryとして保存し、ideaを保存すること' do

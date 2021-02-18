@@ -14,13 +14,15 @@ class Category < ApplicationRecord
 
   def self.create_ideas!(name, body)
     category = find_by(name: name)
-    return category.ideas.create!(body: body) if category.present?
-
-    create_name_and_ideas!(name, body)
+    if category.present?
+      category.ideas.create!(body: body)
+    else
+      create_name_and_ideas!(name, body)
+    end
   end
 
   private
-  
+
   def self.create_name_and_ideas!(name, body)
     transaction do
       new_category = new(name: name)
