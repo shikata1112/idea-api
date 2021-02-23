@@ -19,6 +19,8 @@ class Category < ApplicationRecord
     end
   end
 
+  private
+
   def self.create_name_and_ideas!(name, body)
     transaction do
       new_category = Category.new(name: name)

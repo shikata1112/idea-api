@@ -4,7 +4,7 @@ module Api
     # Description/Explanation of IdeasController class
     class IdeasController < ApplicationController
       def create
-        Category.create_ideas!(params[:category_name], idea_params[:body])
+        Category.create_ideas!(idea_params[:category_name], idea_params[:body])
         head :created
       rescue ActiveRecord::RecordInvalid => e
         Rails.logger.error e.message
