@@ -10,11 +10,7 @@ module Api
       end
 
       def index
-<<<<<<< HEAD
         @ideas = Category.fetch_ideas(params[:category_name])
-=======
-        @ideas = Category.hoge(params[:category_name])
->>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
         if @ideas.present?
           render formats: :json
         else

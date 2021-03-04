@@ -38,11 +38,7 @@ RSpec.describe Category, type: :model do
 
     context 'category_nameが存在しないとき' do
       it 'ideaを全て返すこと' do
-<<<<<<< HEAD
         expect(Category.fetch_ideas(' ').size).to eq 3
-=======
-        expect(Category.hoge(' ').size).to eq 3
->>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
       end
     end
   end
