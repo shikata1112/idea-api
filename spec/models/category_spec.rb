@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
+<<<<<<< HEAD
   describe '.fetch_ideas' do
+=======
+  describe '.hoge' do
+>>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
     before do
       category1 = Category.create!(name: 'アプリ')
       category2 = Category.create!(name: 'スポーツ')
@@ -13,20 +17,32 @@ RSpec.describe Category, type: :model do
     context 'category_nameが存在するとき' do
       context 'category_nameをもつcategoryデータが存在するとき' do
         it 'categoryに紐づくideaを全て返すこと' do
+<<<<<<< HEAD
           expect(Category.fetch_ideas('アプリ').size).to eq 2
+=======
+          expect(Category.hoge('アプリ').size).to eq 2
+>>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
         end
       end
 
       context 'category_nameをもつcategoryデータが存在しないとき' do
         it 'falseを返すこと' do
+<<<<<<< HEAD
           expect(Category.fetch_ideas('健康')).to eq []
+=======
+          expect(Category.hoge('健康')).to eq []
+>>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
         end
       end
     end
 
     context 'category_nameが存在しないとき' do
       it 'ideaを全て返すこと' do
+<<<<<<< HEAD
         expect(Category.fetch_ideas(' ').size).to eq 3
+=======
+        expect(Category.hoge(' ').size).to eq 3
+>>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
       end
     end
   end
@@ -76,4 +92,8 @@ RSpec.describe Category, type: :model do
       end
     end
   end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> a2b84206bf47c22a09caa7ee6d040bd6e997fddc
