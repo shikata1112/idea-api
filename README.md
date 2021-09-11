@@ -1,3 +1,3 @@
 # README
 
-Ideaとcategoryを管理するAPI
+Ideaとcategoryを管理するAPI(jbuilderを使用)
